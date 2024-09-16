@@ -5,6 +5,8 @@ In Project 1, you will be designing a relational database to store information f
 ## Timeline
 9.16 ER_Diagram Design  **Need Check**
 
+The online draw link: https://app.diagrams.net/#G160jWgck1WpaOAMMaGg1jXAfNSvIBu7sL#%7B%22pageId%22%3A%22R2lEEEUBdFMjLlhIrx00%22%7D
+
 9.17 Create/DropTables
 
 9.18 Create/DropViews + load_Data
