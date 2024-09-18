@@ -11,7 +11,7 @@ The online draw link: https://app.diagrams.net/#G160jWgck1WpaOAMMaGg1jXAfNSvIBu7
 
 createTables: 2/42
 
-dropTables: pass the test 8/8
+dropTables: **pass the test 8/8**
 
 9.18 Create/DropViews (50 points)
 
