@@ -49,15 +49,29 @@ CREATE TABLE Programs(
 );
 
 CREATE TABLE Education(
-  user_id INTEGER PRIMARY KEY,
+  user_id INTEGER NOT NULL,
   program_id INTEGER NOT NULL,
   program_year INTEGER NOT NULL,
-  FORGIEN
+  PRIMARY KEY(user_id, program_id),
+  FOREIGN KEY(user_id) REFERENCES Users,
+  FOREIGN KEY(program_id) REFERENCES Programs
 )
 
 CREATE TABLE User_Events(
   event_id INTEGER PRIMARY KEY,
-  event_creator_id
+  event_creator_id INTRGER NOT NULL,
+  event_name VARCHAR2(100) NOT NULL,
+  event_tagline VARCHAR2(100),
+  event_description VARCHAR2(100),
+  event_host VARCHAR2(100),
+  event_type VARCHAR2(100),
+  event_subtype VARCHAR2(100),
+  event_address VARCHAR2(100),
+  event_city_id INTEGER NOT NULL,
+  event_start_time TIMESTAMP,
+  event_end_time TIMESTAMP,
+  FOREIGN KEY(event_creater_id) REFERENCES Users,
+  FOREIGN KEY(event_city_id) REFERENCES Cities
 )
 
 
