@@ -18,9 +18,7 @@ The online draw link: https://app.diagrams.net/#G160jWgck1WpaOAMMaGg1jXAfNSvIBu7
 
 9.19 
 
-createTables: 34/42
-
-<mark>*Album_Photos*<mark>
+createTables: 34/42 <mark>*Album_Photos*<mark>
 
 dropTables: **pass the test (8/8 points)**
 
