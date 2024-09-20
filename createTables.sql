@@ -45,7 +45,7 @@ CREATE TABLE Messages(
   receiver_id INTEGER NOT NULL,
   message_content VARCHAR2(2000) NOT NULL,
   sent_time TIMESTAMP NOT NULL,
-  FOREIGN KEY (sener_id) REFERENCES Users,
+  FOREIGN KEY (sender_id) REFERENCES Users,
   FOREIGN KEY (receiver_id) REFERENCES Users
 );
 
@@ -68,7 +68,7 @@ CREATE TABLE Education(
 
 CREATE TABLE User_Events(
   event_id INTEGER PRIMARY KEY,
-  event_creator_id INTRGER NOT NULL,
+  event_creator_id INTEGER NOT NULL,
   event_name VARCHAR2(100) NOT NULL,
   event_tagline VARCHAR2(100),
   event_description VARCHAR2(100),
@@ -79,7 +79,7 @@ CREATE TABLE User_Events(
   event_city_id INTEGER NOT NULL,
   event_start_time TIMESTAMP,
   event_end_time TIMESTAMP,
-  FOREIGN KEY (event_creater_id) REFERENCES Users,
+  FOREIGN KEY (event_creator_id) REFERENCES Users,
   FOREIGN KEY (event_city_id) REFERENCES Cities
 );
 
@@ -101,13 +101,11 @@ CREATE TABLE Albums(
   album_modified_time TIMESTAMP,
   album_link VARCHAR2(200) NOT NULL,
   album_visibility VARCHAR2(100) NOT NULL,
-  cover_photo_id INTEGER NOT NULL,
+  cover_photo_id INTEGER,
   FOREIGN KEY (album_owner_id) REFERENCES Users,
-  FOREIGN KEY (cover_photo_id) REFERENCES Photos INITIALLY DEFERRED DEFERRABLE,
   CHECK (album_visibility IN ('Everyone', 'Friends', 'Friends_Of_Friends', 'Myself'))
 );
 
--- notice
 CREATE TABLE Photos(
   photo_id INTEGER PRIMARY KEY,
   album_id INTEGER NOT NULL,
@@ -116,7 +114,7 @@ CREATE TABLE Photos(
   photo_modified_time TIMESTAMP,
   photo_link VARCHAR2(200) NOT NULL,
   FOREIGN KEY (album_id) REFERENCES Albums INITIALLY DEFERRED DEFERRABLE
-)；
+);
 
 CREATE TABLE Tags(
   tag_photo_id INTEGER NOT NULL,
@@ -128,6 +126,10 @@ CREATE TABLE Tags(
   FOREIGN KEY (tag_photo_id) REFERENCES Photos,
   FOREIGN KEY (tag_subject_id) REFERENCES Users
 );
+
+ALTER TABLE Albums
+ADD CONSTRAINT fk_cover_photo FOREIGN KEY (cover_photo_id) REFERENCES Photos (photo_id) INITIALLY DEFERRED DEFERRABLE;
+
 
 CREATE SEQUENCE City_Sequence
     START WITH 1
