@@ -52,10 +52,10 @@ CREATE TABLE Education(
   user_id INTEGER NOT NULL,
   program_id INTEGER NOT NULL,
   program_year INTEGER NOT NULL,
-  PRIMARY KEY(user_id, program_id),
-  FOREIGN KEY(user_id) REFERENCES Users,
-  FOREIGN KEY(program_id) REFERENCES Programs
-)
+  PRIMARY KEY (user_id, program_id),
+  FOREIGN KEY (user_id) REFERENCES Users,
+  FOREIGN KEY (program_id) REFERENCES Programs
+);
 
 CREATE TABLE User_Events(
   event_id INTEGER PRIMARY KEY,
@@ -70,9 +70,92 @@ CREATE TABLE User_Events(
   event_city_id INTEGER NOT NULL,
   event_start_time TIMESTAMP,
   event_end_time TIMESTAMP,
-  FOREIGN KEY(event_creater_id) REFERENCES Users,
-  FOREIGN KEY(event_city_id) REFERENCES Cities
-)
+  FOREIGN KEY (event_creater_id) REFERENCES Users,
+  FOREIGN KEY (event_city_id) REFERENCES Cities
+);
+
+CREATE TABLE Participants(
+  event_id INTEGER NOT NULL,
+  user_id INTEGER NOT NULL,
+  confirmation VARCHAR(100) NOT NULL,
+  CHECK (confirmation IN ('Attending', 'Unsure', 'Declines', 'Not_Replied')),
+  PRIMARY KEY (event_id, user_id),
+  FOREIGN KEY (event_id) REFERENCES User_Events,
+  FOREIGN KEY (user_id) REFERENCES Users
+);
+
+CREATE TABLE Albums(
+  album_id INTEGER PRIMARY KEY,
+  album_owner_id INTEGER NOT NULL,
+  album_name VARCHAR2(100) NOT NULL,
+  album_created_time TIMESTAMP NOT NULL,
+  album_modified_time TIMESTAMP,
+  album_link VARCHAR(200) NOT NULL,
+  album_visibility VARCHAR2(100) NOT NULL,
+  cover_photo_id INTEGER NOT NULL,
+  FOREIGN KEY (album_owner_id) REFERENCES Users,
+  FOREIGN KEY (cover_photo_id) REFERENCES Photos INITIALLY DEFERRED DEFERRABLE,
+  CHECK (album_visibility IN ('Everyone', 'Friends', 'Friends_Of_Friends', 'Myself'))
+);
+
+-- notice
+CREATE TABLE Photos(
+  photo_id INTEGER PRIMARY KEY,
+  album_id INTEGER NOT NULL,
+  photo_caption VARCHAR2(100),
+  photo_created_time TIMESTAMP NOT NULL,
+  photo_modified_time TIMESTAMP,
+  photo_link VARCHAR2(200) NOT NULL,
+  FOREIGN KEY (album_id) REFERENCES Albums INITIALLY DEFERRED DEFERRABLE
+)；
+
+CREATE TABLE Tags(
+  tag_photo_id INTEGER NOT NULL,
+  tag_subject_id INTEGER NOT NULL,
+  tag_created_time TIMESTAMP NOT NULL,
+  tag_x INTEGER NOT NULL,
+  tag_y INTEGER NOT NULL,
+  PRIMARY KEY (tag_photo_id, tag_subject_id),
+  FOREIGN KEY (tag_photo_id) REFERENCES Photos,
+  FOREIGN KEY (tag_subject_id) REFERENCES Users
+);
+
+CREATE SEQUENCE CITY_SEQUENCE
+    START WITH 1
+    INCREMENT BY 1;
+
+CREATE TRIGGER ADD_CITY
+    BEFORE INSERT ON CITIES
+    FOR EACH ROW
+    BEGIN
+        SELECT CITY_SEQUENCE.NEXTVAL INTO :NEW.CITY_ID FROM DUAL;
+    END;
+/
+
+CREATE SEQUENCE PROGRAM_SEQUENCE
+    START WITH 1
+    INCREMENT BY 1;
+
+CREATE TRIGGER ADD_PROGRAM
+    BEFORE INSERT ON PROGRAMS
+    FOR EACH ROW
+    BEGIN
+        SELECT PROGRAM_SEQUENCE.NEXTVAL INTO :NEW.PROGRAM_ID FROM DUAL;
+    END;
+/
+
+CREATE TRIGGER Order_Friend_Pairs
+    BEFORE INSERT ON FRIENDS
+    FOR EACH ROW
+        DECLARE temp INTEGER;
+        BEGIN
+            IF :NEW.USER1_ID > :NEW.USER2_ID THEN
+                temp := :NEW.USER2_ID;
+                :NEW.USER2_ID := :NEW.USER1_ID;
+                :NEW.USER1_ID := temp;
+            END IF;
+        END;
+/
 
 
 
