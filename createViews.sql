@@ -21,3 +21,18 @@ LEFT JOIN PROGRAMS P ON E.program_id = P.program_id;
 CREATE VIEW VIEW_ARE_FRIENDS AS
 SELECT FRIENDD.user1_id, FRIENDD.user2_id
 FROM FRIENDS FRIENDD;
+
+CREATE VIEW VIEW_PHOTO_INFORMATION AS
+SELECT A.album_id, A.album_owner_id, A.cover_photo_id, A.album_name, A.album_created_time, A.album_modified_time, A.album_link, A.album_visibility, P.photo_id, P.photo_caption, P.photo_created_time, P.photo_modified_time, P.photo_link
+FROM ALBUMS A
+INNER JOIN PHOTOS P ON A.album_id = P.album_id;
+
+CREATE VIEW VIEW_TAG_INFORMATION AS
+SELECT T.tag_photo_id, T.tag_subject_id, T.tag_created_time, T.tag_x, T.tag_y
+FROM TAGS T;
+
+CREATE VIEW VIEW_EVENT_INFORMATION AS
+SELECT E.event_id, E.event_creator_id, E.event_name, E.event_tagline, E.event_description, E.event_host, E.event_type, E.event_subtype, E.event_location, C.city_name, C.state_name, C.country_name, E.event_start_time, E.event_end_time
+FROM USER_EVENTS E
+LEFT JOIN CITIES C ON E.event_city_id = C.city_id;
+
