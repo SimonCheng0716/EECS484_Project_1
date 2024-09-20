@@ -25,6 +25,13 @@ CREATE TABLE Cities(
   CONSTRAINT cities_unique UNIQUE (city_name, state_name, country_name)
 );
 
+CREATE TABLE User_Current_Cities(
+  user_id INTEGER PRIMARY KEY,
+  current_city_id INTEGER NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES Users,
+  FOREIGN KEY (current_city_id) REFERENCES Cities
+);
+
 CREATE TABLE User_Hometown_Cities(
   user_id INTEGER PRIMARY KEY,
   hometown_city_id INTEGER NOT NULL,
@@ -37,7 +44,9 @@ CREATE TABLE Messages(
   sender_id INTEGER NOT NULL,
   receiver_id INTEGER NOT NULL,
   message_content VARCHAR2(2000) NOT NULL,
-  sent_time TIMESTAMP NOT NULL 
+  sent_time TIMESTAMP NOT NULL,
+  FOREIGN KEY (sener_id) REFERENCES Users,
+  FOREIGN KEY (receiver_id) REFERENCES Users
 );
 
 CREATE TABLE Programs(
@@ -66,7 +75,7 @@ CREATE TABLE User_Events(
   event_host VARCHAR2(100),
   event_type VARCHAR2(100),
   event_subtype VARCHAR2(100),
-  event_address VARCHAR2(100),
+  event_address VARCHAR2(2000),
   event_city_id INTEGER NOT NULL,
   event_start_time TIMESTAMP,
   event_end_time TIMESTAMP,
@@ -77,7 +86,7 @@ CREATE TABLE User_Events(
 CREATE TABLE Participants(
   event_id INTEGER NOT NULL,
   user_id INTEGER NOT NULL,
-  confirmation VARCHAR(100) NOT NULL,
+  confirmation VARCHAR2(100) NOT NULL,
   CHECK (confirmation IN ('Attending', 'Unsure', 'Declines', 'Not_Replied')),
   PRIMARY KEY (event_id, user_id),
   FOREIGN KEY (event_id) REFERENCES User_Events,
@@ -90,7 +99,7 @@ CREATE TABLE Albums(
   album_name VARCHAR2(100) NOT NULL,
   album_created_time TIMESTAMP NOT NULL,
   album_modified_time TIMESTAMP,
-  album_link VARCHAR(200) NOT NULL,
+  album_link VARCHAR2(200) NOT NULL,
   album_visibility VARCHAR2(100) NOT NULL,
   cover_photo_id INTEGER NOT NULL,
   FOREIGN KEY (album_owner_id) REFERENCES Users,
