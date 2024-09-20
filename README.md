@@ -7,14 +7,17 @@ In Project 1, you will be designing a relational database to store information f
 
 The online draw link: https://app.diagrams.net/#G160jWgck1WpaOAMMaGg1jXAfNSvIBu7sL#%7B%22pageId%22%3A%22R2lEEEUBdFMjLlhIrx00%22%7D
 
-9.17 Create/DropTables (50 points) 10/50
+9.17 Create/DropTables (50 points) 42/50
 
-createTables: 2/42
+createTables: 34/42
+
+/**Album_Photos**/
 
 dropTables: **pass the test (8/8 points)**
 
 9.18 Create/DropViews (50 points)
 
 9.19 load_Data (50 points)
+
 
 9.19 - 9.24 Test
