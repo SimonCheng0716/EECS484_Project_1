@@ -19,8 +19,8 @@ LEFT JOIN EDUCATION E ON U.user_id = E.user_id
 LEFT JOIN PROGRAMS P ON E.program_id = P.program_id;
 
 CREATE VIEW VIEW_ARE_FRIENDS AS
-SELECT FRIENDD.user1_id, FRIENDD.user2_id
-FROM FRIENDS FRIENDD;
+SELECT F.user1_id, F.user2_id
+FROM FRIENDS F;
 
 CREATE VIEW VIEW_PHOTO_INFORMATION AS
 SELECT A.album_id, A.album_owner_id, A.cover_photo_id, A.album_name, A.album_created_time, A.album_modified_time, A.album_link, A.album_visibility, P.photo_id, P.photo_caption, P.photo_created_time, P.photo_modified_time, P.photo_link
