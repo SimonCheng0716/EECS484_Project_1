@@ -22,3 +22,13 @@ createTables: 34/42 <mark>*Album_Photos*<mark>
 
 dropTables: **pass the test (8/8 points)**
 
+9.22
+
+create/dropTables: 42/50 <mark>*Album_Photos*<mark>
+
+loadData: **pass the test 50/50 points**
+
+create/dropViews: 30/50
+<img width="1225" alt="image" src="https://github.com/user-attachments/assets/33a983b4-d028-4442-b53b-b11e2025d5ef">
+
+
