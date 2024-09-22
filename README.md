@@ -7,15 +7,6 @@ In Project 1, you will be designing a relational database to store information f
 
 The online draw link: https://app.diagrams.net/#G160jWgck1WpaOAMMaGg1jXAfNSvIBu7sL#%7B%22pageId%22%3A%22R2lEEEUBdFMjLlhIrx00%22%7D
 
-9.17 Create/DropTables (50 points)
-
-9.18 Create/DropViews (50 points)
-
-9.19 load_Data (50 points)
-
-
-9.19 - 9.24 Test
-
 9.19 
 
 createTables: 34/42 <mark>*Album_Photos*<mark>
@@ -37,6 +28,8 @@ The problems Senhao found:
 /createviews 
 
 line14: LEFT JOIN USER_CURRENT_CITIE<mark>**S**
+
+line35: E.event_location -> <mark>**E.event_address**
 
 
 
