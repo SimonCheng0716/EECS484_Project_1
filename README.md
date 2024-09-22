@@ -23,6 +23,7 @@ createTables: 34/42 <mark>*Album_Photos*<mark>
 dropTables: **pass the test (8/8 points)**
 
 9.22
+<mark>*122/150*<mark>
 
 create/dropTables: 42/50 <mark>*Album_Photos*<mark>
 
