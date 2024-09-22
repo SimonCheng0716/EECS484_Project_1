@@ -32,4 +32,11 @@ loadData: **pass the test 50/50 points**
 create/dropViews: 30/50
 <img width="1225" alt="image" src="https://github.com/user-attachments/assets/33a983b4-d028-4442-b53b-b11e2025d5ef">
 
+The problems Senhao found: 
+
+/createviews 
+
+line14: LEFT JOIN USER_CURRENT_CITIE<mark>**S**
+
+
 
