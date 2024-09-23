@@ -93,29 +93,74 @@ CREATE TABLE Participants(
   FOREIGN KEY (user_id) REFERENCES Users
 );
 
-CREATE TABLE Albums(
-  album_id INTEGER PRIMARY KEY,
-  album_owner_id INTEGER NOT NULL,
-  album_name VARCHAR2(100) NOT NULL,
-  album_created_time TIMESTAMP NOT NULL,
-  album_modified_time TIMESTAMP,
-  album_link VARCHAR2(200) NOT NULL,
-  album_visibility VARCHAR2(100) NOT NULL,
-  cover_photo_id INTEGER,
-  FOREIGN KEY (album_owner_id) REFERENCES Users,
-  CHECK (album_visibility IN ('Everyone', 'Friends', 'Friends_Of_Friends', 'Myself'))
-);
+-- CREATE TABLE Albums(
+--   album_id INTEGER PRIMARY KEY,
+--   album_owner_id INTEGER NOT NULL,
+--   album_name VARCHAR2(100) NOT NULL,
+--   album_created_time TIMESTAMP NOT NULL,
+--   album_modified_time TIMESTAMP,
+--   album_link VARCHAR2(200) NOT NULL,
+--   album_visibility VARCHAR2(100) NOT NULL,
+--   cover_photo_id INTEGER,
+--   FOREIGN KEY (album_owner_id) REFERENCES Users,
+--   CHECK (album_visibility IN ('Everyone', 'Friends', 'Friends_Of_Friends', 'Myself'))
+-- );
 
+-- CREATE TABLE Photos(
+--   photo_id INTEGER PRIMARY KEY,
+--   album_id INTEGER NOT NULL,
+--   photo_caption VARCHAR2(2000),
+--   photo_created_time TIMESTAMP NOT NULL,
+--   photo_modified_time TIMESTAMP,
+--   photo_link VARCHAR2(2000) NOT NULL,
+--   FOREIGN KEY (album_id) REFERENCES Albums INITIALLY DEFERRED DEFERRABLE
+-- );
+
+-- ALTER TABLE Albums
+-- ADD CONSTRAINT fk_cover_photo 
+-- FOREIGN KEY (cover_photo_id) REFERENCES Photos (photo_id) INITIALLY DEFERRED DEFERRABLE;
+
+-- CREATE TABLE Tags(
+--   tag_photo_id INTEGER NOT NULL,
+--   tag_subject_id INTEGER NOT NULL,
+--   tag_created_time TIMESTAMP NOT NULL,
+--   tag_x INTEGER NOT NULL,
+--   tag_y INTEGER NOT NULL,
+--   PRIMARY KEY (tag_photo_id, tag_subject_id),
+--   FOREIGN KEY (tag_photo_id) REFERENCES Photos,
+--   FOREIGN KEY (tag_subject_id) REFERENCES Users
+-- );
 CREATE TABLE Photos(
-  photo_id INTEGER PRIMARY KEY,
-  album_id INTEGER NOT NULL,
-  photo_caption VARCHAR2(100),
-  photo_created_time TIMESTAMP NOT NULL,
-  photo_modified_time TIMESTAMP,
-  photo_link VARCHAR2(200) NOT NULL,
-  FOREIGN KEY (album_id) REFERENCES Albums INITIALLY DEFERRED DEFERRABLE
+    photo_id INTEGER PRIMARY KEY,
+    album_id INTEGER NOT NULL,
+    photo_caption VARCHAR2(2000),
+    photo_created_time TIMESTAMP NOT NULL,
+    photo_modified_time TIMESTAMP,
+    photo_link VARCHAR2(2000) NOT NULL
 );
 
+CREATE TABLE Albums(
+    album_id INTEGER PRIMARY KEY,
+    album_name VARCHAR2(100) NOT NULL,
+    album_owner_id INTEGER NOT NULL,
+    album_created_time TIMESTAMP NOT NULL,
+    album_modified_time TIMESTAMP,
+    album_link VARCHAR2(2000) NOT NULL,
+    album_visibility VARCHAR2(100) NOT NULL,
+    cover_photo_id INTEGER NOT NULL,
+    FOREIGN KEY(album_owner_id) REFERENCES Users(user_id) ON delete cascade,
+    CHECK(album_visibility IN ('Everyone', 'Friends','Friends_Of_Friends', 'Myself'))
+);
+
+ALTER TABLE Photos
+    ADD CONSTRAINT photo_album_id_fk
+    FOREIGN KEY(album_id) REFERENCES Albums(album_id) DEFERRABLE INITIALLY DEFERRED;
+
+ALTER TABLE Albums
+    ADD CONSTRAINT album_photo_id_fk
+    FOREIGN KEY(cover_photo_id) REFERENCES Photos(photo_id) DEFERRABLE INITIALLY DEFERRED;
+
+-- Tags
 CREATE TABLE Tags(
   tag_photo_id INTEGER NOT NULL,
   tag_subject_id INTEGER NOT NULL,
@@ -126,9 +171,6 @@ CREATE TABLE Tags(
   FOREIGN KEY (tag_photo_id) REFERENCES Photos,
   FOREIGN KEY (tag_subject_id) REFERENCES Users
 );
-
-ALTER TABLE Albums
-ADD CONSTRAINT fk_cover_photo FOREIGN KEY (cover_photo_id) REFERENCES Photos (photo_id) INITIALLY DEFERRED DEFERRABLE;
 
 
 CREATE SEQUENCE City_Sequence
